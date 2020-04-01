@@ -1,11 +1,12 @@
 //#region Imports
 
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 
 import { BaseCrudProxy } from '../../../common/base-crud.proxy';
 import { UserEntity } from '../../../typeorm/entities/user.entity';
 import { OngProxy } from '../../ong/models/ong.proxy';
+import { Column } from 'typeorm';
 
 //#endregion
 
@@ -26,6 +27,9 @@ export class UserProxy extends BaseCrudProxy {
 
     this.email = entity.email;
     this.roles = entity.roles;
+    this.cellphone  = entity.cellphone;
+    this.cpf = entity.cpf;
+    this.university = entity.university;
     this.ongs = Array.isArray(entity.ongs) && entity.ongs.map(ong => new OngProxy(ong)) || [];
   }
 
@@ -36,6 +40,24 @@ export class UserProxy extends BaseCrudProxy {
    */
   @ApiProperty()
   public email: string;
+
+  /**
+   * O cpf do usuário
+   */
+  @ApiProperty()
+  public cpf: string;
+
+  /**
+   * O celular do usuário
+   */
+  @ApiProperty()
+  public cellphone: string;
+
+  /**
+   * A universidade do usuário
+   */
+  @ApiPropertyOptional()
+  public university?: string;
 
   /**
    * As permissões desse usuário

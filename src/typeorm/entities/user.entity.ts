@@ -3,7 +3,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 
 import { BaseEntity } from '../../common/base-entity';
-import { OngProxy } from '../../modules/ong/models/ong.proxy';
 import { OngEntity } from './ong.entity';
 
 //#endregion
@@ -17,29 +16,38 @@ export class UserEntity extends BaseEntity {
   //#region Constructor
 
   /**
-   * Construtor padrão
+   * O e-mail do usuário
    */
-  constructor(partial: Partial<UserEntity>) {
-    super();
-
-    Object.assign(this, partial);
-  }
+  @Column({ nullable: false, unique: true })
+  public email: string;
 
   //#endregion
 
   //#region Public Properties
 
   /**
-   * O e-mail do usuário
-   */
-  @Column({ nullable: false, unique: true })
-  public email: string;
-
-  /**
    * A senha do usuário
    */
   @Column({ nullable: false })
   public password: string;
+
+  /**
+   * O cpf do usuário
+   */
+  @Column({ nullable: false })
+  public cpf: string;
+
+  /**
+   * O celular do usuário
+   */
+  @Column({ nullable: false })
+  public cellphone: string;
+
+  /**
+   * A universidade do usuário
+   */
+  @Column({ nullable: true })
+  public university: string;
 
   /**
    * As permissões desse usuário
@@ -52,6 +60,16 @@ export class UserEntity extends BaseEntity {
    */
   @OneToMany(() => OngEntity, ong => ong.user)
   public ongs: OngEntity[];
+
+
+  /**
+   * Construtor padrão
+   */
+  constructor(partial: Partial<UserEntity>) {
+    super();
+
+    Object.assign(this, partial);
+  }
 
   //#endregion
 
