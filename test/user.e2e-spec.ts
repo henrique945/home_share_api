@@ -132,6 +132,8 @@ describe('User (e2e)', () => {
         email: 'new@email.com',
         password: '123456',
         isActive: true,
+        cpf: '',
+        cellphone: '',
       };
 
       const { body } = await request(app.getHttpServer())
@@ -148,6 +150,8 @@ describe('User (e2e)', () => {
       const createPayload: CreateUserPayload = {
         email: 'new@email.com',
         password: '123456',
+        cpf: '',
+        cellphone: '',
       };
 
       await request(app.getHttpServer())
@@ -168,6 +172,9 @@ describe('User (e2e)', () => {
         email: 0,
         password: 0,
         isActive: 'false',
+        cpf: '',
+        cellphone: '',
+        university: ''
       };
 
       const { body } = await request(app.getHttpServer())

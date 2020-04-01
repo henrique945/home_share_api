@@ -1,7 +1,7 @@
 //#region Imports
 
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional, MaxLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MaxLength } from 'class-validator';
 
 import { BaseCrudCreatePayload } from '../../../common/base-crud-create.payload';
 import { DefaultValidationMessages } from '../../../common/default-validation-messages';
@@ -21,6 +21,30 @@ export class UpdateUserPayload extends BaseCrudCreatePayload {
   @MaxLength(255, { message: 'É necessário enviar um e-mail contendo menos de 255 caracteres.' })
   @IsEmail({ }, { message: DefaultValidationMessages.IsEmail })
   public email?: string;
+
+  /**
+   * O cpf do usuário
+   */
+  @ApiProperty()
+  @IsOptional()
+  @IsString({ message: DefaultValidationMessages.IsString })
+  public cpf?: string;
+
+  /**
+   * O celular do usuário
+   */
+  @ApiProperty()
+  @IsOptional()
+  @IsString({ message: DefaultValidationMessages.IsString })
+  public cellphone?: string;
+
+  /**
+   * A universidade do usuário
+   */
+  @ApiProperty()
+  @IsOptional()
+  @IsString({ message: DefaultValidationMessages.IsString })
+  public university?: string;
 
   /**
    * A senha do usuário

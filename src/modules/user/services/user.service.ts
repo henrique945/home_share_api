@@ -29,7 +29,8 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private repository: Repository<UserEntity>,
-  ) {  }
+  ) {
+  }
 
   //#endregion
 
@@ -186,6 +187,9 @@ export class UserService {
       ...isValid(entityId) && { id: entityId },
       ...isValid(payload.email) && { email: payload.email },
       ...isValid(payload.password) && { password: payload.password },
+      ...isValid(payload.cellphone) && { cellphone: payload.cellphone },
+      ...isValid(payload.cpf) && { cpf: payload.cpf },
+      ...isValid(payload.university) && { university: payload.university },
       ...isValid(payload.isActive) && { isActive: payload.isActive },
     });
   }
