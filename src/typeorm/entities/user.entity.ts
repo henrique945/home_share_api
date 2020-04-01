@@ -13,17 +13,17 @@ import { OngEntity } from './ong.entity';
 @Entity('users')
 export class UserEntity extends BaseEntity {
 
-  //#region Constructor
-
   /**
    * O e-mail do usuário
    */
   @Column({ nullable: false, unique: true })
   public email: string;
 
-  //#endregion
-
-  //#region Public Properties
+  /**
+   * O nome do usuário
+   */
+  @Column({ nullable: false })
+  public name: string;
 
   /**
    * A senha do usuário
@@ -70,7 +70,5 @@ export class UserEntity extends BaseEntity {
 
     Object.assign(this, partial);
   }
-
-  //#endregion
 
 }

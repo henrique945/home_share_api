@@ -6,7 +6,6 @@ import { Type } from 'class-transformer';
 import { BaseCrudProxy } from '../../../common/base-crud.proxy';
 import { UserEntity } from '../../../typeorm/entities/user.entity';
 import { OngProxy } from '../../ong/models/ong.proxy';
-import { Column } from 'typeorm';
 
 //#endregion
 
@@ -26,8 +25,9 @@ export class UserProxy extends BaseCrudProxy {
     super(entity);
 
     this.email = entity.email;
+    this.name = entity.name;
     this.roles = entity.roles;
-    this.cellphone  = entity.cellphone;
+    this.cellphone = entity.cellphone;
     this.cpf = entity.cpf;
     this.university = entity.university;
     this.ongs = Array.isArray(entity.ongs) && entity.ongs.map(ong => new OngProxy(ong)) || [];
@@ -40,6 +40,12 @@ export class UserProxy extends BaseCrudProxy {
    */
   @ApiProperty()
   public email: string;
+
+  /**
+   * O nome do usuário
+   */
+  @ApiProperty()
+  public name: string;
 
   /**
    * O cpf do usuário

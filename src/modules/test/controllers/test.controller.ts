@@ -63,18 +63,21 @@ export class TestController {
 
     const admin = await this.user.createOne({
       email: 'admin@email.com',
+      name: '',
       password: '123456',
       cellphone: '',
       cpf: '',
     });
     await this.user.createOne({
       email: 'user@email.com',
+      name: '',
       password: '123456',
       cellphone: '',
       cpf: '',
     });
     await this.user.createOne({
       email: 'userTwo@email.com',
+      name: '',
       password: '123456',
       cellphone: '',
       cpf: '',

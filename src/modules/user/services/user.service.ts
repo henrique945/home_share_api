@@ -186,6 +186,7 @@ export class UserService {
     return new UserEntity({
       ...isValid(entityId) && { id: entityId },
       ...isValid(payload.email) && { email: payload.email },
+      ...isValid(payload.name) && { name: payload.name },
       ...isValid(payload.password) && { password: payload.password },
       ...isValid(payload.cellphone) && { cellphone: payload.cellphone },
       ...isValid(payload.cpf) && { cpf: payload.cpf },

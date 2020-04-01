@@ -23,6 +23,14 @@ export class CreateUserPayload extends BaseCrudCreatePayload {
   public email: string;
 
   /**
+   * O nome do usuário
+   */
+  @ApiProperty()
+  @IsDefined({ message: 'É necessário enviar um nome.' })
+  @IsString({ message: DefaultValidationMessages.IsString })
+  public name: string;
+
+  /**
    * O celular do usuário
    */
   @ApiProperty()
@@ -51,7 +59,6 @@ export class CreateUserPayload extends BaseCrudCreatePayload {
    */
   @ApiProperty()
   @IsDefined({ message: 'É necessário enviar um senha.' })
-  @MaxLength(255, { message: 'É necessário enviar uma senha contendo menos de 255 caracteres.' })
   public password: string;
 
 }

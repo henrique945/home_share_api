@@ -130,6 +130,7 @@ describe('User (e2e)', () => {
     it('should can create a new user', async () => {
       const createPayload: CreateUserPayload = {
         email: 'new@email.com',
+        name: '',
         password: '123456',
         isActive: true,
         cpf: '',
@@ -149,6 +150,7 @@ describe('User (e2e)', () => {
     it('should get status 400 when try create a user with already exist email', async () => {
       const createPayload: CreateUserPayload = {
         email: 'new@email.com',
+        name: '',
         password: '123456',
         cpf: '',
         cellphone: '',
@@ -174,7 +176,8 @@ describe('User (e2e)', () => {
         isActive: 'false',
         cpf: '',
         cellphone: '',
-        university: ''
+        university: '',
+        name: '',
       };
 
       const { body } = await request(app.getHttpServer())
