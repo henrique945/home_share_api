@@ -5,7 +5,6 @@ import { Type } from 'class-transformer';
 
 import { BaseCrudProxy } from '../../../common/base-crud.proxy';
 import { UserEntity } from '../../../typeorm/entities/user.entity';
-import { OngProxy } from '../../ong/models/ong.proxy';
 
 //#endregion
 
@@ -30,7 +29,6 @@ export class UserProxy extends BaseCrudProxy {
     this.cellphone = entity.cellphone;
     this.cpf = entity.cpf;
     this.university = entity.university;
-    this.ongs = Array.isArray(entity.ongs) && entity.ongs.map(ong => new OngProxy(ong)) || [];
   }
 
   //#endregion
@@ -70,12 +68,4 @@ export class UserProxy extends BaseCrudProxy {
    */
   @ApiProperty()
   public roles: string;
-
-  /**
-   * A lista com as ongs na qual esse usuário tem controle
-   */
-  @ApiProperty({ type: () => OngProxy, isArray: true })
-  @Type(() => OngProxy)
-  public ongs: OngProxy[];
-
 }

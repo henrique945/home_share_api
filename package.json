@@ -1,8 +1,8 @@
 {
-  "name": "@h4ad/omnistack-api",
+  "name": "Home-Share",
   "version": "0.0.1",
-  "description": "A API para o projeto Be The Hero da semana OmniStack 11 feita em NestJS.",
-  "author": "Vinícius Lourenço",
+  "description": "A API para o aplicativo HomeShare.",
+  "author": "Henrique Rodrigues Silva",
   "private": true,
   "license": "MIT",
   "scripts": {
