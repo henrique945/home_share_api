@@ -185,9 +185,9 @@ export class UserService {
   private getEntityFromPayload(payload: CreateUserPayload | UpdateUserPayload, entityId?: number): UserEntity {
     return new UserEntity({
       ...isValid(entityId) && { id: entityId },
-      ...isValid(payload.email) && { email: payload.email },
+      ...payload instanceof CreateUserPayload && { email: payload.email },
       ...isValid(payload.name) && { name: payload.name },
-      ...isValid(payload.password) && { password: payload.password },
+      ...payload instanceof CreateUserPayload && { password: payload.password },
       ...isValid(payload.cellphone) && { cellphone: payload.cellphone },
       ...isValid(payload.cpf) && { cpf: payload.cpf },
       ...isValid(payload.university) && { university: payload.university },

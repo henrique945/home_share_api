@@ -14,15 +14,6 @@ import { DefaultValidationMessages } from '../../../common/default-validation-me
 export class UpdateUserPayload extends BaseCrudCreatePayload {
 
   /**
-   * O e-mail do usuário
-   */
-  @ApiProperty()
-  @IsOptional()
-  @MaxLength(255, { message: 'É necessário enviar um e-mail contendo menos de 255 caracteres.' })
-  @IsEmail({}, { message: DefaultValidationMessages.IsEmail })
-  public email?: string;
-
-  /**
    * O nome do usuário
    */
   @ApiProperty()
@@ -53,12 +44,4 @@ export class UpdateUserPayload extends BaseCrudCreatePayload {
   @IsOptional()
   @IsString({ message: DefaultValidationMessages.IsString })
   public university?: string;
-
-  /**
-   * A senha do usuário
-   */
-  @ApiProperty()
-  @IsOptional()
-  public password?: string;
-
 }
