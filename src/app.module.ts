@@ -6,6 +6,7 @@ import { AuthTokenModule } from './modules/auth/auth-token.module';
 import { EnvModule } from './modules/env/env.module';
 import { TypeOrmService } from './modules/typeorm/services/type-orm.service';
 import { UserModule } from './modules/user/user.module';
+import { PropertyModule } from './modules/property/property.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UserModule } from './modules/user/user.module';
     AuthTokenModule,
     EnvModule,
     UserModule,
+    PropertyModule,
   ],
   providers: [
     EnvModule,
