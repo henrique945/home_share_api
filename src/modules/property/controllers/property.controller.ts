@@ -13,7 +13,6 @@ import { PropertyService } from '../services/property.service';
 /**
  * A classe que representa o construtor que lida com as rotas de uma propriedade
  */
-@ApiBearerAuth()
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('property')
 @Controller('property')
