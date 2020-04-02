@@ -7,8 +7,6 @@ import { EnvModule } from './modules/env/env.module';
 import { TypeOrmService } from './modules/typeorm/services/type-orm.service';
 import { UserModule } from './modules/user/user.module';
 
-const testModules = [];
-
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -18,7 +16,6 @@ const testModules = [];
     AuthTokenModule,
     EnvModule,
     UserModule,
-    ...testModules,
   ],
   providers: [
     EnvModule,

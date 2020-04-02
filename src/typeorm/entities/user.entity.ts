@@ -1,6 +1,6 @@
 //#region Imports
 
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 import { BaseEntity } from '../../common/base-entity';
 

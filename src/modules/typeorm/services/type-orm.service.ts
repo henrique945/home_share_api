@@ -5,6 +5,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
 import { UserEntity } from '../../../typeorm/entities/user.entity';
 import { EnvService } from '../../env/services/env.service';
+import { PropertyEntity } from '../../../typeorm/entities/property.entity';
 
 //#endregion
 
@@ -23,7 +24,8 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
    */
   constructor(
     private readonly env: EnvService,
-  ) { }
+  ) {
+  }
 
   //#endregion
 
@@ -40,6 +42,7 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
       logging: this.env.isDevelopment,
       entities: [
         UserEntity,
+        PropertyEntity,
       ],
       migrations: [
         __dirname + '/../../../typeorm/migrations/**/*{.ts,.js}',
