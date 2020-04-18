@@ -53,9 +53,9 @@ export class PropertyService {
    * Método que cria uma nova propriedade
    */
   public async createOne(payload: CreatePropertyPayload): Promise<PropertyEntity> {
-    const user = this.getEntityFromPayload(payload);
+    const property = this.getEntityFromPayload(payload);
 
-    return await this.repository.save(user);
+    return await this.repository.save(property);
   }
 
   /**
