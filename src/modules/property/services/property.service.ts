@@ -8,6 +8,7 @@ import { isValid } from '../../../utils/functions';
 import { CreatePropertyPayload } from '../models/create-property.payload';
 import { UpdatePropertyPayload } from '../models/update-property.payload';
 import { UserEntity } from '../../../typeorm/entities/user.entity';
+import { UserService } from '../../user/services/user.service';
 
 @Injectable()
 export class PropertyService {
@@ -18,6 +19,7 @@ export class PropertyService {
   constructor(
     @InjectRepository(PropertyEntity)
     private repository: Repository<PropertyEntity>,
+    private readonly userService: UserService,
   ) {
   }
 
@@ -55,6 +57,12 @@ export class PropertyService {
    */
   public async createOne(payload: CreatePropertyPayload): Promise<PropertyEntity> {
     const property = this.getEntityFromPayload(payload);
+
+    const propertyId = +property.userOwnerId;
+    const exists  = await this.userService.exists(propertyId);
+
+    if(!exists)
+      throw new UnauthorizedException('Associar propriedade à um usuário existente.');
 
     return await this.repository.save(property);
   }
