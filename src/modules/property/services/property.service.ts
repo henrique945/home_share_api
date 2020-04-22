@@ -7,6 +7,7 @@ import { TypeOrmValueTypes } from '../../../common/type-orm-value.types';
 import { isValid } from '../../../utils/functions';
 import { CreatePropertyPayload } from '../models/create-property.payload';
 import { UpdatePropertyPayload } from '../models/update-property.payload';
+import { UserEntity } from '../../../typeorm/entities/user.entity';
 
 @Injectable()
 export class PropertyService {
@@ -32,7 +33,7 @@ export class PropertyService {
   /**
    * Método que retorna uma propriedade pelo ID
    */
-  public async getOne(requestPropertyId: number, propertyId: number): Promise<PropertyEntity> {
+  public async getOne(requestUser: UserEntity, propertyId: number): Promise<PropertyEntity> {
     const property = await this.repository.findOne({
       where: {
         id: propertyId,
@@ -43,7 +44,7 @@ export class PropertyService {
     if (!property)
       throw new NotFoundException('A propriedade que você procura não existe ou foi desativada.');
 
-    if (requestPropertyId !== propertyId)
+    if (requestUser.id !== property.userOwnerId && requestUser.roles !== 'admin')
       throw new UnauthorizedException('Você não tem permissão para visualizar as informações de outra propriedade.');
 
     return property;
@@ -61,7 +62,7 @@ export class PropertyService {
   /**
    * Método que atualiza uma propriedade
    */
-  public async updateOne(requestPropertyId: number, propertyId: number, payload: UpdatePropertyPayload): Promise<PropertyEntity> {
+  public async updateOne(requestUser: UserEntity, propertyId: number, payload: UpdatePropertyPayload): Promise<PropertyEntity> {
     const isPropertyExists = await this.exists(propertyId);
 
     if (!isPropertyExists)
@@ -69,7 +70,7 @@ export class PropertyService {
 
     const property = this.getEntityFromPayload(payload, propertyId);
 
-    if (requestPropertyId !== propertyId)
+    if (requestUser.id !== property.userOwnerId && requestUser.roles !== 'admin')
       throw new UnauthorizedException('Você não tem permissão para atualizar as informações de outra propriedade.');
 
     return await this.repository.save(property);

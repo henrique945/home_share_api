@@ -1,14 +1,15 @@
-import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, ClassSerializerInterceptor, Controller, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { ProtectTo } from '../../../decorators/protect/protect.decorator';
 import { CrudProxy, mapCrud } from '../../../utils/crud';
 
 import { PropertyProxy } from '../models/property.proxy';
 import { PropertyEntity } from '../../../typeorm/entities/property.entity';
-import { Property } from '../../../decorators/property/property.decorator';
 import { CreatePropertyPayload } from '../models/create-property.payload';
 import { UpdatePropertyPayload } from '../models/update-property.payload';
 import { PropertyService } from '../services/property.service';
+import { User } from '../../../decorators/user/user.decorator';
+import { UserEntity } from '../../../typeorm/entities/user.entity';
 
 /**
  * A classe que representa o construtor que lida com as rotas de uma propriedade
@@ -16,14 +17,15 @@ import { PropertyService } from '../services/property.service';
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('property')
 @Controller('property')
-export class PropertyController{
+export class PropertyController {
 
   /**
    * Construtor padrão
    */
   constructor(
     private readonly service: PropertyService,
-  ) {}
+  ) {
+  }
 
   /**
    * Método que retorna várias informações da entidade
@@ -40,15 +42,15 @@ export class PropertyController{
   /**
    * Método que retorna as informações de uma entidade
    *
-   * @param requestUser As informações do usuário que está fazendo a requisição
+   * @param requestProperty
    * @param id A identificação do usuário
    */
   @ProtectTo('user', 'admin')
   @Get('/:id')
   @ApiOperation({ summary: 'Busca uma propriedade pelo ID' })
   @ApiOkResponse({ type: PropertyProxy })
-  public async getOne(@Property() requestProperty: PropertyEntity, @Param('id') id: number): Promise<CrudProxy<PropertyProxy>> {
-    return await this.service.getOne(requestProperty.id, +id)
+  public async getOne(@User() requestUser: UserEntity, @Param('id') id: number): Promise<CrudProxy<PropertyProxy>> {
+    return await this.service.getOne(requestUser, +id)
       .then(response => mapCrud(PropertyProxy, response));
   }
 
@@ -76,8 +78,8 @@ export class PropertyController{
   @Put(':id')
   @ApiOperation({ summary: 'Atualiza uma propriedade' })
   @ApiOkResponse({ type: PropertyProxy })
-  public async updateOne(@Property() requestProperty: PropertyEntity, @Param('id') id: number, @Body() payload: UpdatePropertyPayload): Promise<CrudProxy<PropertyProxy>> {
-    return await this.service.updateOne(requestProperty.id, +id, payload)
+  public async updateOne(@User() requestUser: UserEntity, @Param('id') id: number, @Body() payload: UpdatePropertyPayload): Promise<CrudProxy<PropertyProxy>> {
+    return await this.service.updateOne(requestUser, +id, payload)
       .then(response => mapCrud(PropertyProxy, response));
   }
 

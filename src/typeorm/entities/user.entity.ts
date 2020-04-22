@@ -1,8 +1,11 @@
 //#region Imports
 
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 import { BaseEntity } from '../../common/base-entity';
+import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
+import { Type } from 'class-transformer';
+import { PropertyEntity } from './property.entity';
 
 //#endregion
 
@@ -53,6 +56,14 @@ export class UserEntity extends BaseEntity {
    */
   @Column({ nullable: false })
   public roles: string;
+
+  /**
+   * Joins
+   */
+  @ApiModelProperty({ type: type => PropertyEntity, isArray: true })
+  @OneToMany(u => PropertyEntity, post => post.user)
+  @Type(() => PropertyEntity)
+  public properties: PropertyEntity[];
 
   /**
    * Construtor padrão
