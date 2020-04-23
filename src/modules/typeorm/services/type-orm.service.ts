@@ -6,6 +6,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 import { UserEntity } from '../../../typeorm/entities/user.entity';
 import { EnvService } from '../../env/services/env.service';
 import { PropertyEntity } from '../../../typeorm/entities/property.entity';
+import { TransactionEntity } from '../../../typeorm/entities/transaction.entity';
 
 //#endregion
 
@@ -43,6 +44,7 @@ export class TypeOrmService implements TypeOrmOptionsFactory {
       entities: [
         UserEntity,
         PropertyEntity,
+        TransactionEntity,
       ],
       migrations: [
         __dirname + '/../../../typeorm/migrations/**/*{.ts,.js}',

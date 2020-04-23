@@ -7,6 +7,7 @@ import { EnvModule } from './modules/env/env.module';
 import { TypeOrmService } from './modules/typeorm/services/type-orm.service';
 import { UserModule } from './modules/user/user.module';
 import { PropertyModule } from './modules/property/property.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PropertyModule } from './modules/property/property.module';
     EnvModule,
     UserModule,
     PropertyModule,
+    TransactionModule,
   ],
   providers: [
     EnvModule,

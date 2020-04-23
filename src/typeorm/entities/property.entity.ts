@@ -1,9 +1,10 @@
 import { BaseEntity } from '../../common/base-entity';
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { StringArrayTransformer } from '../../common/transformers/string-array.transformer';
 import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
 import { Type } from 'class-transformer';
 import { UserEntity } from './user.entity';
+import { TransactionEntity } from './transaction.entity';
 
 /**
  * A classe que representa a entidade que lida com as propriedades
@@ -66,6 +67,11 @@ export class PropertyEntity extends BaseEntity {
   @ManyToOne(u => UserEntity, user => user.properties)
   @Type(() => UserEntity)
   public user: UserEntity;
+
+  @ApiModelProperty({ type: type => TransactionEntity, isArray: true })
+  @OneToMany(u => TransactionEntity, t => t.property)
+  @Type(() => TransactionEntity)
+  public transactions: TransactionEntity[];
 
   /**
    * Construtor padrão

@@ -6,6 +6,7 @@ import { BaseEntity } from '../../common/base-entity';
 import { ApiModelProperty } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
 import { Type } from 'class-transformer';
 import { PropertyEntity } from './property.entity';
+import { TransactionEntity } from './transaction.entity';
 
 //#endregion
 
@@ -61,9 +62,14 @@ export class UserEntity extends BaseEntity {
    * Joins
    */
   @ApiModelProperty({ type: type => PropertyEntity, isArray: true })
-  @OneToMany(u => PropertyEntity, post => post.user)
+  @OneToMany(u => PropertyEntity, property => property.user)
   @Type(() => PropertyEntity)
   public properties: PropertyEntity[];
+
+  @ApiModelProperty({ type: type => TransactionEntity, isArray: true })
+  @OneToMany(u => TransactionEntity, t => t.user)
+  @Type(() => TransactionEntity)
+  public transactions: TransactionEntity[];
 
   /**
    * Construtor padrão

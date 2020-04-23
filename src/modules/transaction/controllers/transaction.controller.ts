@@ -3,26 +3,26 @@ import { Body, ClassSerializerInterceptor, Controller, Get, Param, Post, Put, Us
 import { ProtectTo } from '../../../decorators/protect/protect.decorator';
 import { CrudProxy, mapCrud } from '../../../utils/crud';
 
-import { CreatePropertyPayload } from '../models/create-property.payload';
-import { UpdatePropertyPayload } from '../models/update-property.payload';
-import { PropertyService } from '../services/property.service';
 import { User } from '../../../decorators/user/user.decorator';
 import { UserEntity } from '../../../typeorm/entities/user.entity';
-import { PropertyProxy } from '../models/property.proxy';
+import { TransactionService } from '../services/transaction.service';
+import { TransactionProxy } from '../models/transaction.proxy';
+import { CreateTransactionPayload } from '../models/create-transaction.payload';
+import { UpdateTransactionPayload } from '../models/update-transaction.payload';
 
 /**
- * A classe que representa o construtor que lida com as rotas de uma transação
+ * A classe que representa o construtor que lida com as rotas de uma propriedade
  */
 @UseInterceptors(ClassSerializerInterceptor)
-@ApiTags('property')
-@Controller('property')
-export class PropertyController {
+@ApiTags('transaction')
+@Controller('transaction')
+export class TransactionController {
 
   /**
    * Construtor padrão
    */
   constructor(
-    private readonly service: PropertyService,
+    private readonly service: TransactionService,
   ) {
   }
 
@@ -32,10 +32,10 @@ export class PropertyController {
   @ProtectTo('admin')
   @Get('/')
   @ApiOperation({ summary: 'Busca todos as propriedades' })
-  @ApiOkResponse({ type: PropertyProxy, isArray: true })
-  public async getMany(): Promise<CrudProxy<PropertyProxy>> {
+  @ApiOkResponse({ type: TransactionProxy, isArray: true })
+  public async getMany(): Promise<CrudProxy<TransactionProxy>> {
     return await this.service.getMany()
-      .then(response => mapCrud(PropertyProxy, response));
+      .then(response => mapCrud(TransactionProxy, response));
   }
 
   /**
@@ -47,10 +47,10 @@ export class PropertyController {
   @ProtectTo('user', 'admin')
   @Get('/:id')
   @ApiOperation({ summary: 'Busca uma propriedade pelo ID' })
-  @ApiOkResponse({ type: PropertyProxy })
-  public async getOne(@User() requestUser: UserEntity, @Param('id') id: number): Promise<CrudProxy<PropertyProxy>> {
+  @ApiOkResponse({ type: TransactionProxy })
+  public async getOne(@User() requestUser: UserEntity, @Param('id') id: number): Promise<CrudProxy<TransactionProxy>> {
     return await this.service.getOne(requestUser, +id)
-      .then(response => mapCrud(PropertyProxy, response));
+      .then(response => mapCrud(TransactionProxy, response));
   }
 
   /**
@@ -60,10 +60,10 @@ export class PropertyController {
    */
   @Post('/')
   @ApiOperation({ summary: 'Cria uma propriedade' })
-  @ApiCreatedResponse({ type: PropertyProxy })
-  public createOne(@Body() payload: CreatePropertyPayload): Promise<CrudProxy<PropertyProxy>> {
+  @ApiCreatedResponse({ type: TransactionProxy })
+  public createOne(@Body() payload: CreateTransactionPayload): Promise<CrudProxy<TransactionProxy>> {
     return this.service.createOne(payload)
-      .then(response => mapCrud(PropertyProxy, response));
+      .then(response => mapCrud(TransactionProxy, response));
   }
 
   /**
@@ -76,10 +76,10 @@ export class PropertyController {
   @ProtectTo('user', 'admin')
   @Put(':id')
   @ApiOperation({ summary: 'Atualiza uma propriedade' })
-  @ApiOkResponse({ type: PropertyProxy })
-  public async updateOne(@User() requestUser: UserEntity, @Param('id') id: number, @Body() payload: UpdatePropertyPayload): Promise<CrudProxy<PropertyProxy>> {
+  @ApiOkResponse({ type: TransactionProxy })
+  public async updateOne(@User() requestUser: UserEntity, @Param('id') id: number, @Body() payload: UpdateTransactionPayload): Promise<CrudProxy<TransactionProxy>> {
     return await this.service.updateOne(requestUser, +id, payload)
-      .then(response => mapCrud(PropertyProxy, response));
+      .then(response => mapCrud(TransactionProxy, response));
   }
 
 

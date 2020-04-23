@@ -15,7 +15,7 @@ export class UpdatePropertyPayload extends BaseCrudUpdatePayload {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: DefaultValidationMessages.IsString })
-  public street: string;
+  public street?: string;
 
   /**
    * O bairro da propriedade
@@ -23,7 +23,7 @@ export class UpdatePropertyPayload extends BaseCrudUpdatePayload {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: DefaultValidationMessages.IsString })
-  public township: string;
+  public township?: string;
 
   /**
    * A cidade da propriedade
@@ -31,7 +31,7 @@ export class UpdatePropertyPayload extends BaseCrudUpdatePayload {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: DefaultValidationMessages.IsString })
-  public city: string;
+  public city?: string;
 
   /**
    * A descrição da propriedade
@@ -39,7 +39,7 @@ export class UpdatePropertyPayload extends BaseCrudUpdatePayload {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: DefaultValidationMessages.IsString })
-  public description: string;
+  public description?: string;
 
   /***
    * A quantidade de quartos que tem na propriedade
@@ -47,7 +47,7 @@ export class UpdatePropertyPayload extends BaseCrudUpdatePayload {
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber({}, { message: DefaultValidationMessages.IsNumber })
-  public rooms: number;
+  public rooms?: number;
 
   /**
    * O preço do aluguel
@@ -55,7 +55,7 @@ export class UpdatePropertyPayload extends BaseCrudUpdatePayload {
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber({}, { message: DefaultValidationMessages.IsNumber })
-  public pricePerUser: number;
+  public pricePerUser?: number;
 
   /**
    * A lista de imagens da propriedade
@@ -64,7 +64,7 @@ export class UpdatePropertyPayload extends BaseCrudUpdatePayload {
   @IsOptional()
   @IsArray({ message: DefaultValidationMessages.IsArray })
   @IsString({ message: DefaultValidationMessages.IsString, each: true })
-  public listImages: string[];
+  public listImages?: string[];
 
   /**
    * O usuário associado a casa (proprietário)
@@ -72,5 +72,5 @@ export class UpdatePropertyPayload extends BaseCrudUpdatePayload {
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber({}, { message: DefaultValidationMessages.IsNumber })
-  public userOwnerId: number;
+  public userOwnerId?: number;
 }

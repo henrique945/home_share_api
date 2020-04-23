@@ -58,8 +58,7 @@ export class PropertyService {
   public async createOne(payload: CreatePropertyPayload): Promise<PropertyEntity> {
     const property = this.getEntityFromPayload(payload);
 
-    const propertyId = +property.userOwnerId;
-    const exists  = await this.userService.exists(propertyId);
+    const exists  = await this.userService.exists(property.userOwnerId);
 
     if(!exists)
       throw new UnauthorizedException('Associar propriedade à um usuário existente.');
