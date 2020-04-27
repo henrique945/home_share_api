@@ -1,4 +1,4 @@
-import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Body, ClassSerializerInterceptor, Controller, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { ProtectTo } from '../../../decorators/protect/protect.decorator';
 import { CrudProxy, mapCrud } from '../../../utils/crud';
@@ -13,6 +13,7 @@ import { UpdateTransactionPayload } from '../models/update-transaction.payload';
 /**
  * A classe que representa o construtor que lida com as rotas de uma propriedade
  */
+@ApiBearerAuth()
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('transaction')
 @Controller('transaction')
