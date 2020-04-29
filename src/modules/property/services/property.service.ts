@@ -9,6 +9,7 @@ import { CreatePropertyPayload } from '../models/create-property.payload';
 import { UpdatePropertyPayload } from '../models/update-property.payload';
 import { UserEntity } from '../../../typeorm/entities/user.entity';
 import { UserService } from '../../user/services/user.service';
+import { PropertyManyPaginationOptions } from '../models/property-many.pagination.options';
 
 @Injectable()
 export class PropertyService {
@@ -26,10 +27,24 @@ export class PropertyService {
   /**
    * Método que retorna várias propriedades cadastradas no banco de dados
    */
-  public async getMany(): Promise<PropertyEntity[]> {
-    return await this.repository.createQueryBuilder('property')
+  public async getMany(options?: PropertyManyPaginationOptions): Promise<PropertyEntity[]> {
+    const { limit = 15, page = 1, relations = [], userId } = options;
+
+    const normalizedLimit = Math.min(100, Math.max(1, limit));
+    const normalizedPage = Math.max(1, page);
+
+    let query = this.repository.createQueryBuilder('property')
       .where('property.isActive = :isActive', { isActive: TypeOrmValueTypes.TRUE })
-      .getMany();
+      .limit(normalizedLimit)
+      .offset((normalizedPage - 1) * limit);
+
+    if (relations.some(relation => relation === 'user'))
+      query = query.leftJoinAndSelect('property.user', 'user', 'user.isActive = :isActive', { isActive: TypeOrmValueTypes.TRUE });
+
+    if (userId && Number(userId))
+      query = query.andWhere('property.userOwnerId = :userId', { userId: Number(userId) });
+
+    return query.getMany();
   }
 
   /**
