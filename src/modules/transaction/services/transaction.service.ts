@@ -130,6 +130,16 @@ export class TransactionService {
       .then(count => count > 0);
   }
 
+  /**
+   * Calcula quantas e quais transações ainda estão ativas por usuário
+   */
+  public async transactionByUser(userId: number): Promise<TransactionEntity[]> {
+    const query =  await this.repository.createQueryBuilder('transaction')
+      .where('transaction.userRentId = :userId', { userId });
+
+    return query.getMany();
+  }
+
   //#endregion
 
   //#region Private Methods

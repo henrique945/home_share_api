@@ -1,5 +1,16 @@
 import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Body, ClassSerializerInterceptor, Controller, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ProtectTo } from '../../../decorators/protect/protect.decorator';
 import { CrudProxy, mapCrud } from '../../../utils/crud';
 
@@ -9,6 +20,9 @@ import { TransactionService } from '../services/transaction.service';
 import { TransactionProxy } from '../models/transaction.proxy';
 import { CreateTransactionPayload } from '../models/create-transaction.payload';
 import { UpdateTransactionPayload } from '../models/update-transaction.payload';
+import { ApiImplicitParam } from '@nestjs/swagger/dist/decorators/api-implicit-param.decorator';
+import { NestJSRequest } from '../../../utils/type.shared';
+import { TypeOrmValueTypes } from '../../../common/type-orm-value.types';
 
 /**
  * A classe que representa o construtor que lida com as rotas de uma propriedade
@@ -25,6 +39,28 @@ export class TransactionController {
   constructor(
     private readonly service: TransactionService,
   ) {
+  }
+
+  /**
+   * Método que retorna quantas transações este usuário possui ativas (count)
+   */
+  @Get('userId/:userId/count')
+  @ApiOkResponse({ description: 'Get user transaction count.' })
+  @ApiImplicitParam({ name: 'userId' })
+  public async transactionCount(@Param('userId') userId: string): Promise<number> {
+    const transactionByUser = await this.service.transactionByUser(+userId);
+
+    return transactionByUser.length;
+  }
+
+  /**
+   * Método que retorna quais transações este usuário possui ativas (entidades)
+   */
+  @Get('userId/:userId')
+  @ApiOkResponse({ description: 'Get user transaction count.' })
+  @ApiImplicitParam({ name: 'userId' })
+  public async transactionByUser(@Param('userId') userId: string): Promise<CrudProxy<TransactionProxy>> {
+    return await this.service.transactionByUser(+userId).then(response => mapCrud(TransactionProxy, response));
   }
 
   /**
