@@ -1,5 +1,5 @@
 {
-  "name": "Home-Share",
+  "name": "home-share",
   "version": "0.0.1",
   "description": "A API para o aplicativo HomeShare.",
   "author": "Henrique Rodrigues Silva",
@@ -27,11 +27,11 @@
     "deploy:heroku": "git push heroku master"
   },
   "dependencies": {
-    "@nestjs/common": "^7.0.0",
-    "@nestjs/core": "^7.0.0",
-    "@nestjs/jwt": "^7.0.0",
-    "@nestjs/passport": "^7.0.0",
-    "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/common": "^7.6.7",
+    "@nestjs/core": "^7.6.7",
+    "@nestjs/jwt": "^7.2.0",
+    "@nestjs/passport": "^7.1.5",
+    "@nestjs/platform-express": "^7.6.7",
     "@nestjs/swagger": "^4.6.1",
     "@nestjs/typeorm": "^6.3.1",
     "@sentry/minimal": "^5.15.0",
